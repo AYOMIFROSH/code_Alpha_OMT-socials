@@ -3,6 +3,7 @@
 
 
 :root{
+    --background: mintcream;
     --text-color: #f5f5f5;
     --hover-color: #12f7ff;
     --bg-color: #250521;
@@ -59,7 +60,7 @@
 body{
     font-family: "Poppins", sans-serif;
     color: var(--darkgrey);
-    background: var(--deepblue);
+    background: var(--text-color);
     overflow-x: hidden;
 }
 
@@ -153,6 +154,8 @@ nav .create {
 main{
     position: relative;
     top: 5.6rem;
+    background: var(--background);
+    /* background: lightgoldenrodyellow; */
 }
 
 main .container{
@@ -552,18 +555,20 @@ main .container .right{
 .right .request{
     background: #bdbdbb;
     padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
-    margin-bottom: 0.7rem;
+    border-radius: var(--border-radius);
+    margin-top: 0.7rem;
+    justify-content: space-between;
+    display: flex;
 }
 
 .right .request .info{
     display: flex;
-    gap: 0.2rem;
-    margin-bottom: 1rem;
+    /* gap: 1rem; */
 }
 
 .right .request .action {
     display: flex;
-    gap: 0.3rem;
+    margin-left: -2.6rem;
     margin-top: 1rem;
+    gap: 0.6rem;
 }
