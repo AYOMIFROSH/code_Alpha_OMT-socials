@@ -563,7 +563,6 @@ main .container .right{
 
 .right .request .info{
     display: flex;
-    /* gap: 1rem; */
 }
 
 .right .request .action {
