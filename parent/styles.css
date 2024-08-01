@@ -12,6 +12,8 @@
     --normal-font: 2rem;
     --neon-box-shadow: 0 0 .5rem #12f7ff;
     --h2-font: 3rem;
+    --sticky-top-left: 5.4rem;
+    --sticky-top-right: -18rem;
     --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
     0 0 20px rgba(18, 247, 255, 0.3),
     0 0 30px rgba(18, 247, 255, 0.3),
@@ -20,6 +22,8 @@
     0 0 80px rgba(18, 247, 255, 0.3),
     0 0 100px rgba(18, 247, 255, 0.3),
     0 0 150px rgba(18, 247, 255, 0.3),
+
+    
  }
 
  :root{
@@ -36,6 +40,7 @@
    --brightorange: #FF9900;
    --livelygreen: #33CC33;
    --neonpink: #FF33CC;
+   --nighttime: sienna;
 
    --border-radius: 2rem;
    --card-border-radius: 1.8rem;
@@ -43,9 +48,9 @@
    --search-padding: 0.6rem 1rem;
    --card-padding: 1rem;
 
-   --sticky-top-left: 5.4rem;
-   --sticky-top-right: -18rem;
  }
+
+
 
 *, *::before, *::after{
     margin: 0;
@@ -268,7 +273,7 @@ main .container .left .profile{
     top: 0;
     left: 110%;
     width: 30rem;
-    background: #bdbdbd;
+    background: var(--background);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     box-shadow: 0 0 2rem hsl(var(--hover-color), 75%,60% 25%);
@@ -281,7 +286,7 @@ main .container .left .profile{
     width: 1.2rem;
     height: 1.2rem;
     display: block;
-    background: #bdbdbd;
+    background: var(--text-color);
     position: absolute;
     left: -0.6rem;
     transform: rotate(45deg);
@@ -557,17 +562,242 @@ main .container .right{
     padding: var(--card-padding);
     border-radius: var(--border-radius);
     margin-top: 0.7rem;
-    justify-content: space-between;
-    display: flex;
 }
 
 .right .request .info{
     display: flex;
+    gap: .7rem;
+    margin-bottom: 1rem;
 }
 
 .right .request .action {
     display: flex;
-    margin-left: -2.6rem;
-    margin-top: 1rem;
-    gap: 0.6rem;
+    gap: 1rem;
 }
+
+/* -----------------------Theme Customization------------ */
+.customize-theme{
+    background: rgba(255, 255, 255, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.customize-theme .card{
+    background: var(--background);
+    padding: 3rem;
+    border-radius: var(--card-border-radius);
+    width: 50%;
+    box-shadow: 0 0 1rem var(--hover-color);
+}
+
+/* -------------------------font size customization------------ */
+
+.customize-theme .font-size{
+    margin-top: 5rem;
+}
+
+.customize-theme .font-size > diV{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #bdbdbd;
+    padding: var(--search-padding);
+    border-radius: var(--card-border-radius);
+}
+
+.customize-theme .choose-size{
+    background: var(--text-color);
+    height: 0.3rem;
+    width: 100%;
+    margin: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customize-theme .choose-size span{
+    width: 1rem;
+    height: 1rem;
+    background: var(--energeticgreen);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.customize-theme .choose-size span.active {
+    background: var(--deepblue);
+}
+
+/* -------------------font colors----------- */
+.customize-theme .color{
+    margin-top: 2rem;
+}
+
+.customize-theme .choose-color{
+    background: #bdbdbd;
+    padding: var(--search-padding);
+    border-radius: var(--card-border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.customize-theme .choose-color span{
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+}
+
+.customize-theme .choose-color span:nth-child(1){
+    background: var(--vibrantOrange);
+}
+
+.customize-theme .choose-color span:nth-child(2){
+    background: var(--secon-bg-color);
+}
+
+.customize-theme .choose-color span:nth-child(3){
+    background: var(--livelygreen);
+}
+
+.customize-theme .choose-color span:nth-child(4){
+    background: var(--brightBlue);
+}
+
+.customize-theme .choose-color span:nth-child(5){
+    background: var(--hover-color);
+}
+
+.customize-theme .choose-color span.active{
+    border: 5px solid var(--text-color);
+}
+
+/* --------------------------background------------ */
+.customize-theme .background{
+    margin-top: 2rem;
+}
+
+.customize-theme .choose-bg{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.customize-theme .choose-bg > div{
+    padding: var(--card-padding);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.customize-theme .choose-bg > div.active{
+    border: 2px solid var(--hover-color);
+}
+
+.customize-theme .choose-bg .bg-1{
+    background: var(--deepblue);
+    color: #f5f5f5;
+}
+
+.customize-theme .choose-bg .bg-2{
+    background: var(--nighttime);
+    color: ;
+}
+
+.customize-theme .choose-bg .bg-3{
+    background: black;
+    color: white;
+}
+
+.customize-theme .choose-bg > div span{
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid var(--brightorange);
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+/* ----------BreakPoint Section For all accessories-------- */
+
+@media screen and (max-width: 1200px){
+    .container{
+        width: 96%;
+    }
+
+    main .container{
+        grid-template-columns: 5rem auto 30w;
+    }
+    .left{
+        width: 5rem;
+        z-index: 5;
+    }
+    main .container .left .profile{
+        display: none;
+    }
+    .sidebar h3{
+        display: none;
+    }
+    .left .btn{
+        display: none;
+    }
+
+    .customize-theme .card{
+        width: 80vw;
+    }
+}
+
+@media screen and (max-width: 992px){
+    nav .search-bar{
+        display: none;
+    }
+    main .container{
+        grid-template-columns: 0 auto 5rem;
+        gap: 0;
+
+    }
+    main .container .left{
+        grid-column: 3/4;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .left .notifications-popup{
+        position: absolute;
+        left: -20rem;
+        width: 20rem;
+    }
+
+    .left .notifications-popup::before{
+        display: absolute;
+        top: 1.3rem;
+        left: calc(20rem - 0.6rem);
+        display: block;
+    }
+
+    main .container .middle{
+        grid-column: 1/3;
+    }
+
+    main .container .right{
+        display: none;
+    }
+
+    .customize-theme .card{
+        width: 92vw;
+    }
+}
+
