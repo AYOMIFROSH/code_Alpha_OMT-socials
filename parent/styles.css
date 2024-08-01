@@ -714,7 +714,7 @@ main .container .right{
 
 .customize-theme .choose-bg .bg-2{
     background: var(--nighttime);
-    color: ;
+    color: var(--bg-color);
 }
 
 .customize-theme .choose-bg .bg-3{
