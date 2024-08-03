@@ -3,17 +3,43 @@
 
 
 :root{
-    --background: mintcream;
+    --background: #F5FFFA;
     --text-color: #f5f5f5;
+    --primary-color-hue: 252;
     --hover-color: #12f7ff;
     --bg-color: #250521;
     --secon-bg-color: #292e33;
     --big-font: 2.5rem;
     --normal-font: 2rem;
     --neon-box-shadow: 0 0 .5rem #12f7ff;
+    --purple: purple;
     --h2-font: 3rem;
     --sticky-top-left: 5.4rem;
     --sticky-top-right: -18rem;
+    --color-danger:hsl(0, 95%, 65%);
+   --brightBlue:  #03A9F4;
+   --vibrantOrange: #FFC107;
+   --energeticgreen: #8BC34A;
+   --darkgrey: #212121;
+   --hotpink: #FF69B4;
+   --hothot: #bdbdbd;
+   --primaryroot: 252;
+
+   /* ------------------------idea2------------------------ */
+
+   --deepblue: #2F4F7F;
+   --brightorange: #FF9900;
+   --livelygreen: #33CC33;
+   --neonpink: var(--primaryroot), #FF33CC;
+   --nighttime: #A0522D;
+   --blackness: #000000;
+
+   --border-radius: 2rem;
+   --card-border-radius: 1.8rem;
+   --btn-padding: 0.6rem 2rem;
+   --search-padding: 0.6rem 1rem;
+   --card-padding: 1rem;
+
     --font-neon-text-shadow: 0 0 10px rgba(18, 247, 255, 0.3),
     0 0 20px rgba(18, 247, 255, 0.3),
     0 0 30px rgba(18, 247, 255, 0.3),
@@ -26,29 +52,7 @@
     
  }
 
- :root{
-    --color-danger:hsl(0, 95%, 65%);
-   --brightBlue:  #03A9F4;
-   --vibrantOrange: #FFC107;
-   --energeticgreen: #8BC34A;
-   --darkgrey: #212121;
-   --hotpink: #FF69B4;
 
-   /* ------------------------idea2------------------------ */
-
-   --deepblue: #2F4F7F;
-   --brightorange: #FF9900;
-   --livelygreen: #33CC33;
-   --neonpink: #FF33CC;
-   --nighttime: sienna;
-
-   --border-radius: 2rem;
-   --card-border-radius: 1.8rem;
-   --btn-padding: 0.6rem 2rem;
-   --search-padding: 0.6rem 1rem;
-   --card-padding: 1rem;
-
- }
 
 
 
@@ -122,6 +126,10 @@ nav{
     position: fixed;
     top: 0;
     z-index: 10;
+}
+
+nav .container h2{
+    color: var(--secon-bg-color);
 }
 
 nav .container{
@@ -238,7 +246,7 @@ main .container .left .profile{
 
 .left .sidebar .active i, 
 .left .sidebar .active h3{
-    color: var(--deepblue);
+    color: var(--secon-bg-color);
 }
 
 .left .sidebar .active::before{
@@ -247,7 +255,7 @@ main .container .left .profile{
     width: 0.5rem;
     height: 100%;
     position: absolute;
-    background: purple;
+    background: var(--secon-bg-color)
 }
 
 .left .sidebar .menu-item:first-child.active{
@@ -509,7 +517,7 @@ main .container .right{
 }
 
 .right .messages .message-requests{
-    color: purple;
+    color: var(--secon-bg-color);
 }
 
 .right .messages .message{
@@ -596,7 +604,7 @@ main .container .right{
     padding: 3rem;
     border-radius: var(--card-border-radius);
     width: 50%;
-    box-shadow: 0 0 1rem var(--hover-color);
+    box-shadow: 0 0 1rem var(--secon-bg-color);
 }
 
 /* -------------------------font size customization------------ */
@@ -627,13 +635,13 @@ main .container .right{
 .customize-theme .choose-size span{
     width: 1rem;
     height: 1rem;
-    background: var(--energeticgreen);
+    background: var(--text-color);
     border-radius: 50%;
     cursor: pointer;
 }
 
 .customize-theme .choose-size span.active {
-    background: var(--deepblue);
+    background: var(--secon-bg-color);
 }
 
 /* -------------------font colors----------- */
@@ -657,28 +665,32 @@ main .container .right{
 }
 
 .customize-theme .choose-color span:nth-child(1){
-    background: var(--vibrantOrange);
+    background: var(--darkgrey);
 }
 
 .customize-theme .choose-color span:nth-child(2){
-    background: var(--secon-bg-color);
+    background: var(--purple);
 }
 
 .customize-theme .choose-color span:nth-child(3){
-    background: var(--livelygreen);
+    background: var(--color-danger);
+
 }
 
 .customize-theme .choose-color span:nth-child(4){
-    background: var(--brightBlue);
+    background: var(--nighttime);
+
 }
 
 .customize-theme .choose-color span:nth-child(5){
-    background: var(--hover-color);
+    background: var(--deepblue);
+
 }
 
 .customize-theme .choose-color span.active{
-    border: 5px solid var(--text-color);
+    border: 5px solid var(--secon-bg-color);
 }
+
 
 /* --------------------------background------------ */
 .customize-theme .background{
@@ -704,28 +716,28 @@ main .container .right{
 }
 
 .customize-theme .choose-bg > div.active{
-    border: 2px solid var(--hover-color);
+    border: 2px solid var(--secon-bg-color);
 }
 
 .customize-theme .choose-bg .bg-1{
-    background: var(--deepblue);
-    color: #f5f5f5;
+    background: var(--background);
+    color: var(--text-color);
 }
 
 .customize-theme .choose-bg .bg-2{
     background: var(--nighttime);
-    color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .customize-theme .choose-bg .bg-3{
-    background: black;
-    color: white;
+    background: var(--bg-color);
+    color: var(--text-color);
 }
 
 .customize-theme .choose-bg > div span{
     width: 2rem;
     height: 2rem;
-    border: 2px solid var(--brightorange);
+    border: 2px solid var(--secon-bg-color);
     border-radius: 50%;
     margin-right: 1rem;
 }

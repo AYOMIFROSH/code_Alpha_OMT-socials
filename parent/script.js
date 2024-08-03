@@ -14,6 +14,9 @@ const theme = document.querySelector('#theme');
 const themeModal = document.querySelector('.customize-theme');
 const fontSizes = document.querySelectorAll('.choose-size span');
 var root = document.querySelector(':root');
+const colorPalatte = document.querySelectorAll('.choose-color span');
+
+
 
 
 //remove all the active clicks class from all menu items
@@ -82,16 +85,34 @@ const closeThemeModal = (e) =>{
     }
 }
 
+//close notification-pop
+
+
 themeModal.addEventListener('click', closeThemeModal);
 
 theme.addEventListener('click', openThemeModal);
 
 
+
+
 // --------------Font size
+
+//remove active spans or font size selectors 
+const removeSizeSelector = () => {
+    fontSizes.forEach(size => {
+        size.classList.remove('active');
+    })
+}
+
+
 fontSizes.forEach(size => {
-    let fontSize;
+    
 
     size.addEventListener('click', () =>{
+
+        removeSizeSelector();
+        let fontSize;
+        size.classList.toggle('active');
 
         if(size.classList.contains('font-size-1')){
             fontSize = '10px';
@@ -112,12 +133,12 @@ fontSizes.forEach(size => {
         else if(size.classList.contains('font-size-4')){
             fontSize = '19px';
             root.style.setProperty('--sticky-top-left', '-5rem');
-            root.style.setProperty('--sticky-top-right', '25rem');
+            root.style.setProperty('--sticky-top-right', '-25rem');
         }
         else if(size.classList.contains('font-size-5')){
             fontSize = '22px';
             root.style.setProperty('--sticky-top-left', '-12rem');
-            root.style.setProperty('--sticky-top-right', '35rem');
+            root.style.setProperty('--sticky-top-right', '-35rem');
         }
 
          // change the font size of the root html element 
@@ -125,4 +146,99 @@ fontSizes.forEach(size => {
     })
 
 })
+
+
+
+
+
+
+// Change primary colors 
+
+var root = document.querySelector(':root');
+const colorPalette = document.querySelectorAll('.choose-color span');
+
+//remove active class from color
+
+const changeActiveColorClass = () => {
+    colorPalette.forEach(colorPicker => {
+        colorPicker.classList.remove('active');
+    })
+}
+
+colorPalette.forEach(color => {
+    color.addEventListener('click', () => {
+        let rootColor;
+        //remove active class from color
+        changeActiveColorClass();
+
+        if (color.classList.contains('color-1')) {
+            rootColor = 'var(--darkgrey)';
+        } else if (color.classList.contains('color-2')) {
+            rootColor = 'var(--purple)';
+        } else if (color.classList.contains('color-3')) {
+            rootColor = 'var(--color-danger)';
+        } else if (color.classList.contains('color-4')) {
+            rootColor = 'var(--nighttime)';
+        } else if (color.classList.contains('color-5')) {
+            rootColor = 'var(--deepblue)';
+        }
+
+        root.style.setProperty('--secon-bg-color', rootColor);
+
+        color.classList.add('active');
+    });
+});
+
+
+
+const Bg1 = document.querySelector('.bg-1');
+const Bg2 = document.querySelector('.bg-2');
+const Bg3 = document.querySelector('.bg-3');
+
+
+// theme BACKGROUND values
+const background = '#F5FFFA'; 
+const nighttime = '#A0522D'; 
+const blackness = '#250521'; 
+
+const changeBg = (color) => {
+    root.style.setProperty('--background', color);
+};
+
+
+
+
+
+Bg1.addEventListener('click', () => {
+    // Activate class
+    Bg1.classList.add('active');
+
+    // Remove active class from other options
+    Bg2.classList.remove('active');
+    Bg3.classList.remove('active');
+
+    changeBg(background);
+
+    // Apply the background changes
+    window.location.reload();
+});
+
+
+Bg2.addEventListener('click', () => {
+    Bg2.classList.add('active');
+    Bg1.classList.remove('active');
+    Bg3.classList.remove('active');
+    changeBg(nighttime);
+
+});
+
+Bg3.addEventListener('click', () => {
+    Bg3.classList.add('active');
+    Bg1.classList.remove('active');
+    Bg2.classList.remove('active');
+    changeBg(blackness);
+
+});
+
+
 
