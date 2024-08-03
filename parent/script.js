@@ -242,3 +242,23 @@ Bg3.addEventListener('click', () => {
 
 
 
+
+// script.js
+const loginForm = document.getElementById('login-form');
+const contentDiv = document.getElementById('content');
+
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Check if username and password are correct (you can use an API or a backend server for this)
+    if (username === 'user' && password === 'password') {
+        contentDiv.style.display = 'block';
+    } else {
+        alert('Invalid credentials. Please try again.');
+    }
+});
+
+
+
