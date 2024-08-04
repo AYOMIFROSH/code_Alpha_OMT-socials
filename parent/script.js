@@ -244,21 +244,91 @@ Bg3.addEventListener('click', () => {
 
 
 // script.js
+const registerForm = document.getElementById('create-account');
 const loginForm = document.getElementById('login-form');
-const contentDiv = document.getElementById('content');
+const page = document.getElementById('content');
+const loginLink = document.getElementById('login-link');
 
-loginForm.addEventListener('submit', (e) => {
+
+// form toggles 
+
+
+
+
+registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const username = document.getElementById('username').value;
+    const firstName = document.getElementById('firstname').value;
+    const lastName = document.getElementById('lastname').value;
+    const userName = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
     const password = document.getElementById('password').value;
 
-    // Check if username and password are correct (you can use an API or a backend server for this)
-    if (username === 'user' && password === 'password') {
-        contentDiv.style.display = 'block';
-    } else {
-        alert('Invalid credentials. Please try again.');
+
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const response = await fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+
+            },
+            body: JSON.stringify({firstName, lastName, userName, email, phoneNumber, password} )
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert('User registered successfully');
+
+            registerForm.style.display = 'none';
+
+            loginForm.style.display = 'block'; // Or 'flex', 'inline', etc., depending on your CSS
+
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        alert('Network Error: ' + error.message);
     }
 });
 
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userName = document.getElementById('username-phonenumber').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ userName, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert('Login successful');
+
+            loginForm.style.display = 'none';
+
+            page.style.display = 'block';
+
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        alert('Network Error: ' + error.message);
+    }
+});
+
+// login link
+
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+});
 
 

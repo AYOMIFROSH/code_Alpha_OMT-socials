@@ -513,7 +513,7 @@ main .container .right{
 }
 
 .right .messages .category .active{
-    border-color: var(--deepblue);
+    border-color: var(--secon-bg-color);
 }
 
 .right .messages .message-requests{
@@ -823,20 +823,35 @@ main .container .right{
     border-radius: 5px;
 }
 
+.auth form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth form span{
+    display: flex;
+    font-weight: 500;
+    color: var(--deepblue);
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth form span a{
+    margin-left: 10px;
+    color: var(--hover-color);
+    background-color: var(--darkgrey);
+    box-shadow: var(--neon-box-shadow);
+    padding: 0.1rem 0.5rem;
+}
+
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"],
+input[type="number"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-
-/* button {
-    background-color: #0074D9;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-} */
-
