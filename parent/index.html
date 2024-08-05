@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,15 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
+
+    <!-- ----------------------authentication Create/Login-------------- -->
+
     <div class="auth">
         <div id="auth-container">
-            <form id="create-account">
+            <form id="create-account" autocomplete="off">
+                <div id="message-area"></div>
                 <label for="firstname">FirstName:</label>
                 <input type="text" id="firstname" required>
                 <label for="lastname">LastName:</label>
@@ -23,608 +29,653 @@
                 <label for="phoneNumber">PhoneNumber:</label>
                 <input type="text" id="phoneNumber" required>
                 <label for="password">Password:</label>
-                <input type="password" id="password" required>
+                <input type="password" id="password" required autocomplete="new-password">
+                <p><input type="checkbox" id="show-password"> Show Password</p>
                 <button type="submit" class="btn btn-primary">Register</button>
                 <span>Already have an account? <a href="#" id="login-link">Login</a></span>
             </form>
-    
+
             <form id="login-form" style="display: none;">
-                <label for="username-phonenumber">Username/PhoneNumber:</label>
+                <div id="message-area"></div>
+                <label for="username-phonenumber">Username:</label>
                 <input type="text" id="username-phonenumber" required>
                 <label for="password">Password:</label>
                 <input type="password" id="login-password" required>
                 <button type="submit" class="btn btn-primary">Login</button>
+                <p>Forgot Password? <a href="" id="reset-link">Reset</a></p>
+                <span>you don't have an account? <a href="#" id="register-link">Create</a></span>
+            </form>
+
+            <!-- email verification -->
+            <form id="forgot-password-form" style="display: none;">
+                <label for="forgot-email">Enter your registered email:</label>
+                <input type="email" id="forgot-email" required>
+                <button type="submit" class="btn btn-primary">Send Code</button>
+            </form>
+            
+            <!-- ------------------generated code----------- -->
+            <form id="code-verification" style="display: none;">
+                <label for="Enter-Code">Enter verification code:</label>
+                <input type="number" id="enter-code">
+            </form>
+
+            <!-- form after successful verification -->
+            <form id="reset-password-form" style="display: none;">
+                <label for="new-password">Enter your new password:</label>
+                <input type="password" id="new-password" required>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
     </div>
-    
+
     <div id="content" style="display: none;">
-    <nav>
-        <div class="container" >
-            <h2 log>
-                OMT
-            </h2>
-            <div class="search-bar">
-                <i class="uil uil-search"></i>
-                <input type="search" placeholder="connect with friends, inspirations, and projects">
-            </div>
-            <div class="create">
-                <label class="btn btn-primary" for="create-post">Create</label>
-                <div class="profile-picture">
-                    <img src="./assets/Me_Image.jpg" alt="">
+        <nav>
+            <div class="container">
+                <h2 log>
+                    OMT
+                </h2>
+                <div class="search-bar">
+                    <i class="uil uil-search"></i>
+                    <input type="search" placeholder="connect with friends, inspirations, and projects">
+                </div>
+                <div class="create">
+                    <label class="btn btn-primary" for="create-post">Create</label>
+                    <div class="profile-picture">
+                        <img src="./assets/Me_Image.jpg" alt="">
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- -------------------------main content--------- -->
-     <main>
-        <div class="container">
+        <!-- -------------------------main content--------- -->
+        <main>
+            <div class="container">
 
-            <!-- ----------the left part-------- -->
-            <div class="left">
-                <a class="profile">
-                    <div class="profile-picture">
-                        <img src="./assets/Me_Image.jpg">
-                    </div>
-                    <div class="handle">
-                        <h4>Temi Tayo</h4>
-                        <p class="text-muted">
-                            @Temi
-                        </p>
-                    </div>
-                </a>
-
-
-                <!-- ---------------sidebar---------- -->
-                <div class="sidebar">
-                    <a class="menu-item active">
-                        <span><i class='uil uil-home'></i></span>
-                        <span><h3>Home</h3></span>
-                    </a>
-                    <a class="menu-item">
-                        <span><i class='uil uil-compass'></i></span>
-                        <span><h3>Explore</h3></span>
-                    </a>
-                    <a class="menu-item " id="notifications">
-                        <span><i class='uil uil-bell'><small class="notification-count">9+</small></i></span><h3>Notification</h3>
-                        <!-- ------------Notification PopUp-------- -->
-                        <div class="notifications-popup">
-                            <div>
-                                <div class="profile-picture">
-                                    <img src="./assets/Me_Image.jpg">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Olumade Temitayo</b> connected with you
-                                    <small class="text-muted">19 hrs Ago</small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="profile-picture">
-                                    <img src="./assets/Profilee.png">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Edema Ukabi</b> connected with you
-                                    <small class="text-muted">20 hrs Ago</small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="profile-picture">
-                                    <img src="./assets/prof.png">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Martin Obasi</b> connected with you
-                                    <small class="text-muted">5 hrs Ago</small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="profile-picture">
-                                    <img src="./assets/Brand.png">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Princewil O.</b> connected with you
-                                    <small class="text-muted">7 hrs Ago</small>
-                                </div>
-                            </div>
+                <!-- ----------the left part-------- -->
+                <div class="left">
+                    <a class="profile">
+                        <div class="profile-picture">
+                            <img src="./assets/Me_Image.jpg">
                         </div>
-                        <!-- ---end notification pop--- -->
+                        <div class="handle">
+                            <h4>Temi Tayo</h4>
+                            <p class="text-muted">
+                                @Temi
+                            </p>
+                        </div>
                     </a>
-                    <a class="menu-item" id="messages-notification">
-                        <span><i class='uil uil-envelope-alt'><small class="notification-count">6</small></i></span>
-                        <span><h3>Messages</h3></span>
-                    </a>
-                    <a class="menu-item">
-                        <span><i class='uil uil-bookmark'></i></span>
-                        <span><h3>Bookmark</h3></span>
-                    </a>
-                    <a class="menu-item">
-                        <span><i class='uil uil-chart-line'></i></span>
-                        <span><h3>Analytics</h3></span>
-                    </a>
-                    <a class="menu-item" id="theme">
-                        <span><i class='uil uil-palette'></i></span>
-                        <span><h3>Theme</h3></span>
-                    </a>
-                    <a class="menu-item active">
-                        <span><i class='uil uil-setting'></i></span>
-                        <span><h3>Settings</h3></span>
-                    </a>
+
+
+                    <!-- ---------------sidebar---------- -->
+                    <div class="sidebar">
+                        <a class="menu-item active">
+                            <span><i class='uil uil-home'></i></span>
+                            <span>
+                                <h3>Home</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class='uil uil-compass'></i></span>
+                            <span>
+                                <h3>Explore</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item " id="notifications">
+                            <span><i class='uil uil-bell'><small class="notification-count">9+</small></i></span>
+                            <h3>Notification</h3>
+                            <!-- ------------Notification PopUp-------- -->
+                            <div class="notifications-popup">
+                                <div>
+                                    <div class="profile-picture">
+                                        <img src="./assets/Me_Image.jpg">
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Olumade Temitayo</b> connected with you
+                                        <small class="text-muted">19 hrs Ago</small>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-picture">
+                                        <img src="./assets/Profilee.png">
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Edema Ukabi</b> connected with you
+                                        <small class="text-muted">20 hrs Ago</small>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-picture">
+                                        <img src="./assets/prof.png">
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Martin Obasi</b> connected with you
+                                        <small class="text-muted">5 hrs Ago</small>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-picture">
+                                        <img src="./assets/Brand.png">
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Princewil O.</b> connected with you
+                                        <small class="text-muted">7 hrs Ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ---end notification pop--- -->
+                        </a>
+                        <a class="menu-item" id="messages-notification">
+                            <span><i class='uil uil-envelope-alt'><small class="notification-count">6</small></i></span>
+                            <span>
+                                <h3>Messages</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class='uil uil-bookmark'></i></span>
+                            <span>
+                                <h3>Bookmark</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class='uil uil-chart-line'></i></span>
+                            <span>
+                                <h3>Analytics</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item" id="theme">
+                            <span><i class='uil uil-palette'></i></span>
+                            <span>
+                                <h3>Theme</h3>
+                            </span>
+                        </a>
+                        <a class="menu-item active">
+                            <span><i class='uil uil-setting'></i></span>
+                            <span>
+                                <h3>Settings</h3>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- -----------end of sidebar-------- -->
+
+                    <label for="create-post" class="btn btn-primary">Create Post</label>
+
                 </div>
-                <!-- -----------end of sidebar-------- -->
+                <!-- -----end of the left section ---- ------ -->
 
-                <label for="create-post" class="btn btn-primary">Create Post</label>
-
-            </div>     
-            <!-- -----end of the left section ---- ------ -->
-
-            <!-- ----------the middle part-------- -->
-            <div class="middle">
-                <!-- ---------stories------- -->
-                 <div class="stories">
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/Brand.png">
+                <!-- ----------the middle part-------- -->
+                <div class="middle">
+                    <!-- ---------stories------- -->
+                    <div class="stories">
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/Brand.png">
+                            </div>
+                            <p class="name">Your Story</p>
                         </div>
-                        <p class="name">Your Story</p>
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/Brand.png">
+                            </div>
+                            <p class="name">Edema Ukabi</p>
+                        </div>
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/Brand.png">
+                            </div>
+                            <p class="name">Itohan Mercy</p>
+                        </div>
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/Profilee.png">
+                            </div>
+                            <p class="name">Precious Oshuku</p>
+                        </div>
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/Me_Image.jpg">
+                            </div>
+                            <p class="name">Jamila Smith</p>
+                        </div>
+                        <div class="story">
+                            <div class="profile-picture">
+                                <img src="/parent//assets/prof.png">
+                            </div>
+                            <p class="name">Peter Thomas</p>
+                        </div>
                     </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/Brand.png">
-                        </div>
-                        <p class="name">Edema Ukabi</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/Brand.png">
-                        </div>
-                        <p class="name">Itohan Mercy</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/Profilee.png">
-                        </div>
-                        <p class="name">Precious Oshuku</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/Me_Image.jpg">
-                        </div>
-                        <p class="name">Jamila Smith</p>
-                    </div>
-                    <div class="story">
-                        <div class="profile-picture">
-                            <img src="/parent//assets/prof.png">
-                        </div>
-                        <p class="name">Peter Thomas</p>
-                    </div>
-                 </div>
-                 <!-- ------end of stories section------- -->
+                    <!-- ------end of stories section------- -->
 
-                 <form class="create-post">
-                    <div class="profile-picture">
-                        <img src="/parent/assets/Me_Image.jpg">
-                    </div>
-                    <input type="text" placeholder="what's on your mind, Smith?" id="create-post">
-                    <input type="submit" value="Post" class="btn btn-primary">
-                 </form>
-
-                 <!---------------- feeds 1------------------- -->
-                 <div class="feeds">
-                    <!---------------- feeds------------------- -->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="/parent//assets/Me_Image.jpg">
-                                </div>
-                                <div class="ingo">
-                                    <h3>John Smith</h3>
-                                    <small>UK 5 MUNITES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="/parent/assets/photo1.png">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-button">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
-                            <span><img src="/parent/assets/prof.png" alt=""></span>
-                            <span><img src="/parent/assets/Brand.png" alt=""></span>
-                            <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
-                        </div>
-
-                        <div class="captain">
-                            <p><b>John Smith</b> while the user is checking the content 
-                            and reload the specific section. 
-                            <span class="harsh-tag">#JoeBiden</span></p>
-                        </div>
-                        <div class="comments text-muted">view all 277 comments</div>
-                    </div>
-                 </div>
-                 <div class="feeds">
-                    <!---------------- feeds 2------------------- -->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="/parent//assets/prof.png">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Cassandra Jonhson</h3>
-                                    <small>Camden 10 MUNITES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="/parent/assets/photo2.png">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-button">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
-                            <span><img src="/parent/assets/prof.png" alt=""></span>
-                            <span><img src="/parent/assets/Brand.png" alt=""></span>
-                            <p>Liked by <b>Felix Filip</b> and <b>2,323 others</b></p>
-                        </div>
-
-                        <div class="captain">
-                            <p><b>Cassandra Jonhson</b> while the user is checking the content 
-                            and reload the specific section. 
-                            <span class="harsh-tag">#JoeBiden</span></p>
-                        </div>
-                        <div class="comments text-muted">view all 277 comments</div>
-                    </div>
-                 </div>
-                 <div class="feeds">
-                    <!---------------- feeds 3------------------- -->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="/parent//assets/Profilee.png">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Maxwell Dragon</h3>
-                                    <small>London 30 MUNITES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="/parent/assets/photo3.png">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-button">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
-                            <span><img src="/parent/assets/prof.png" alt=""></span>
-                            <span><img src="/parent/assets/Brand.png" alt=""></span>
-                            <p>Liked by <b>Anthony Malony</b> and <b>2,323 others</b></p>
-                        </div>
-
-                        <div class="captain">
-                            <p><b>Maxwell Dragon</b> while the user is checking the content 
-                            and reload the specific section. 
-                            <span class="harsh-tag">#JoeBiden</span></p>
-                        </div>
-                        <div class="comments text-muted">view all 277 comments</div>
-                    </div>
-                 </div>
-                 <div class="feeds">
-                    <!---------------- feeds 4------------------- -->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="/parent//assets/Brand.png">
-                                </div>
-                                <div class="ingo">
-                                    <h3>David Swagger</h3>
-                                    <small>MANCHESTER 5 MUNITES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="/parent/assets/photo4.png">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-button">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
-                            <span><img src="/parent/assets/prof.png" alt=""></span>
-                            <span><img src="/parent/assets/Brand.png" alt=""></span>
-                            <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
-                        </div>
-
-                        <div class="captain">
-                            <p><b>David Swagger</b> while the user is checking the content 
-                            and reload the specific section. 
-                            <span class="harsh-tag">#JoeBiden</span></p>
-                        </div>
-                        <div class="comments text-muted">view all 277 comments</div>
-                    </div>
-                 </div>
-                 <div class="feeds">
-                    <!---------------- feeds 5------------------- -->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="/parent//assets/Me_Image.jpg">
-                                </div>
-                                <div class="ingo">
-                                    <h3>Romeo Benson</h3>
-                                    <small>KANSA 40 MUNITES AGO</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-                        <div class="photo">
-                            <img src="/parent/assets/pluto.png">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-button">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
-                            <span><img src="/parent/assets/prof.png" alt=""></span>
-                            <span><img src="/parent/assets/Brand.png" alt=""></span>
-                            <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
-                        </div>
-
-                        <div class="captain">
-                            <p><b>Romeo Benson</b> while the user is checking the content 
-                            and reload the specific section. 
-                            <span class="harsh-tag">#JoeBiden</span></p>
-                        </div>
-                        <div class="comments text-muted">view all 277 comments</div>
-                    </div>
-                 </div>
-
-            </div>
-    
-    
-            <!-- ----------the right part-------- -->
-    
-            <div class="right">
-
-                <div class="messages">
-                    <div class="heading">
-                        <h4>Messages</h4><i class="uil uil-edit"></i>
-                    </div>
-                    <!-- -----------------------search filter bar------------- -->
-                     <div class="search-bar">
-                        <i class="uil uil-search"></i>
-                        <input type="search" placeholder="Search Messages" id="message-search">
-                     </div>
-                     <!-- ------------------messages categories-------- -->
-                      <div class="category">
-                        <h6 class="active">Primary</h6>
-                        <h6>General</h6>
-                        <h6 class="message-requests">Request(7)</h6>
-                      </div>
-                    <!-- ------------------messages------------- -->
-                     <div class="message">
+                    <form class="create-post">
                         <div class="profile-picture">
                             <img src="/parent/assets/Me_Image.jpg">
-                            <div class="active"></div>
                         </div>
-                        <div class="message-body">
-                            <h5>Philip Filipe</h5>
-                            <p class="text-muted">Text my Linkedin 🤫 </p>
+                        <input type="text" placeholder="what's on your mind, Smith?" id="create-post">
+                        <input type="submit" value="Post" class="btn btn-primary">
+                    </form>
+
+                    <!---------------- feeds 1------------------- -->
+                    <div class="feeds">
+                        <!---------------- feeds------------------- -->
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/parent//assets/Me_Image.jpg">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>John Smith</h3>
+                                        <small>UK 5 MUNITES AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            <div class="photo">
+                                <img src="/parent/assets/photo1.png">
+                            </div>
+
+                            <div class="action-buttons">
+                                <div class="interaction-button">
+                                    <span><i class="uil uil-heart"></i></span>
+                                    <span><i class="uil uil-comment-dots"></i></span>
+                                    <span><i class="uil uil-share-alt"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span><i class="uil uil-bookmark-full"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
+                                <span><img src="/parent/assets/prof.png" alt=""></span>
+                                <span><img src="/parent/assets/Brand.png" alt=""></span>
+                                <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
+                            </div>
+
+                            <div class="captain">
+                                <p><b>John Smith</b> while the user is checking the content
+                                    and reload the specific section.
+                                    <span class="harsh-tag">#JoeBiden</span>
+                                </p>
+                            </div>
+                            <div class="comments text-muted">view all 277 comments</div>
                         </div>
-                     </div>
-                     <!-- ------------------messages------------- -->
-                     <div class="message">
-                        <div class="profile-picture">
-                            <img src="/parent/assets/Brand.png">
+                    </div>
+                    <div class="feeds">
+                        <!---------------- feeds 2------------------- -->
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/parent//assets/prof.png">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Cassandra Jonhson</h3>
+                                        <small>Camden 10 MUNITES AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            <div class="photo">
+                                <img src="/parent/assets/photo2.png">
+                            </div>
+
+                            <div class="action-buttons">
+                                <div class="interaction-button">
+                                    <span><i class="uil uil-heart"></i></span>
+                                    <span><i class="uil uil-comment-dots"></i></span>
+                                    <span><i class="uil uil-share-alt"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span><i class="uil uil-bookmark-full"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
+                                <span><img src="/parent/assets/prof.png" alt=""></span>
+                                <span><img src="/parent/assets/Brand.png" alt=""></span>
+                                <p>Liked by <b>Felix Filip</b> and <b>2,323 others</b></p>
+                            </div>
+
+                            <div class="captain">
+                                <p><b>Cassandra Jonhson</b> while the user is checking the content
+                                    and reload the specific section.
+                                    <span class="harsh-tag">#JoeBiden</span>
+                                </p>
+                            </div>
+                            <div class="comments text-muted">view all 277 comments</div>
                         </div>
-                        <div class="message-body">
-                            <h5>Demniz Carpel</h5>
-                            <p class="text-bold">I have 500 bucks 💰 </p>
+                    </div>
+                    <div class="feeds">
+                        <!---------------- feeds 3------------------- -->
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/parent//assets/Profilee.png">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Maxwell Dragon</h3>
+                                        <small>London 30 MUNITES AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            <div class="photo">
+                                <img src="/parent/assets/photo3.png">
+                            </div>
+
+                            <div class="action-buttons">
+                                <div class="interaction-button">
+                                    <span><i class="uil uil-heart"></i></span>
+                                    <span><i class="uil uil-comment-dots"></i></span>
+                                    <span><i class="uil uil-share-alt"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span><i class="uil uil-bookmark-full"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
+                                <span><img src="/parent/assets/prof.png" alt=""></span>
+                                <span><img src="/parent/assets/Brand.png" alt=""></span>
+                                <p>Liked by <b>Anthony Malony</b> and <b>2,323 others</b></p>
+                            </div>
+
+                            <div class="captain">
+                                <p><b>Maxwell Dragon</b> while the user is checking the content
+                                    and reload the specific section.
+                                    <span class="harsh-tag">#JoeBiden</span>
+                                </p>
+                            </div>
+                            <div class="comments text-muted">view all 277 comments</div>
                         </div>
-                     </div>
-                     <!-- ------------------messages------------- -->
-                     <div class="message">
-                        <div class="profile-picture">
-                            <img src="/parent/assets/prof.png">
-                            <div class="active"></div>
+                    </div>
+                    <div class="feeds">
+                        <!---------------- feeds 4------------------- -->
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/parent//assets/Brand.png">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>David Swagger</h3>
+                                        <small>MANCHESTER 5 MUNITES AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            <div class="photo">
+                                <img src="/parent/assets/photo4.png">
+                            </div>
+
+                            <div class="action-buttons">
+                                <div class="interaction-button">
+                                    <span><i class="uil uil-heart"></i></span>
+                                    <span><i class="uil uil-comment-dots"></i></span>
+                                    <span><i class="uil uil-share-alt"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span><i class="uil uil-bookmark-full"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
+                                <span><img src="/parent/assets/prof.png" alt=""></span>
+                                <span><img src="/parent/assets/Brand.png" alt=""></span>
+                                <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
+                            </div>
+
+                            <div class="captain">
+                                <p><b>David Swagger</b> while the user is checking the content
+                                    and reload the specific section.
+                                    <span class="harsh-tag">#JoeBiden</span>
+                                </p>
+                            </div>
+                            <div class="comments text-muted">view all 277 comments</div>
                         </div>
-                        <div class="message-body">
-                            <h5>Brown Cassie</h5>
-                            <p class="text-bold">OMG 🙉 </p>
+                    </div>
+                    <div class="feeds">
+                        <!---------------- feeds 5------------------- -->
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/parent//assets/Me_Image.jpg">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Romeo Benson</h3>
+                                        <small>KANSA 40 MUNITES AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            <div class="photo">
+                                <img src="/parent/assets/pluto.png">
+                            </div>
+
+                            <div class="action-buttons">
+                                <div class="interaction-button">
+                                    <span><i class="uil uil-heart"></i></span>
+                                    <span><i class="uil uil-comment-dots"></i></span>
+                                    <span><i class="uil uil-share-alt"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span><i class="uil uil-bookmark-full"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <span><img src="/parent/assets/Me_Image.jpg" alt=""></span>
+                                <span><img src="/parent/assets/prof.png" alt=""></span>
+                                <span><img src="/parent/assets/Brand.png" alt=""></span>
+                                <p>Liked by <b>James Smith</b> and <b>2,323 others</b></p>
+                            </div>
+
+                            <div class="captain">
+                                <p><b>Romeo Benson</b> while the user is checking the content
+                                    and reload the specific section.
+                                    <span class="harsh-tag">#JoeBiden</span>
+                                </p>
+                            </div>
+                            <div class="comments text-muted">view all 277 comments</div>
                         </div>
-                     </div>
-                     <!-- ------------------messages------------- -->
-                     <div class="message">
-                        <div class="profile-picture">
-                            <img src="/parent/assets/Profilee.png">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Leonard Jonhson</h5>
-                            <p class="text-muted">hahahaha 🤣 </p>
-                        </div>
-                     </div>
+                    </div>
+
                 </div>
 
-                <!-- -------------------end of messages---------- -->
 
+                <!-- ----------the right part-------- -->
 
-                <!-- ----------------------------friend request---------------- -->
-                 <div class="friend-requests">
-                    <h4>Requests</h4>
-                    <div class="request">
-                        <div class="info">
+                <div class="right">
+
+                    <div class="messages">
+                        <div class="heading">
+                            <h4>Messages</h4><i class="uil uil-edit"></i>
+                        </div>
+                        <!-- -----------------------search filter bar------------- -->
+                        <div class="search-bar">
+                            <i class="uil uil-search"></i>
+                            <input type="search" placeholder="Search Messages" id="message-search">
+                        </div>
+                        <!-- ------------------messages categories-------- -->
+                        <div class="category">
+                            <h6 class="active">Primary</h6>
+                            <h6>General</h6>
+                            <h6 class="message-requests">Request(7)</h6>
+                        </div>
+                        <!-- ------------------messages------------- -->
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="/parent/assets/Me_Image.jpg">
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Philip Filipe</h5>
+                                <p class="text-muted">Text my Linkedin 🤫 </p>
+                            </div>
+                        </div>
+                        <!-- ------------------messages------------- -->
+                        <div class="message">
                             <div class="profile-picture">
                                 <img src="/parent/assets/Brand.png">
                             </div>
-                            <div>
-                                <h5>Felix Filip</h5>
-                                <p class="text-muted">
-                                    8 Mutual Friends
-                                </p>
+                            <div class="message-body">
+                                <h5>Demniz Carpel</h5>
+                                <p class="text-bold">I have 500 bucks 💰 </p>
                             </div>
                         </div>
-                        <div class="action">
-                            <button class="btn btn-primary">
-                                Accept
-                            </button>
-                            <button class="btn">
-                                Decline
-                            </button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
+                        <!-- ------------------messages------------- -->
+                        <div class="message">
                             <div class="profile-picture">
-                                <img src="/parent/assets/Brand.png">
+                                <img src="/parent/assets/prof.png">
+                                <div class="active"></div>
                             </div>
-                            <div>
-                                <h5>Felix Filip</h5>
-                                <p class="text-muted">
-                                    8 Mutual Friends
-                                </p>
+                            <div class="message-body">
+                                <h5>Brown Cassie</h5>
+                                <p class="text-bold">OMG 🙉 </p>
                             </div>
                         </div>
-                        <div class="action">
-                            <button class="btn btn-primary">
-                                Accept
-                            </button>
-                            <button class="btn">
-                                Decline
-                            </button>
+                        <!-- ------------------messages------------- -->
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="/parent/assets/Profilee.png">
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Leonard Jonhson</h5>
+                                <p class="text-muted">hahahaha 🤣 </p>
+                            </div>
                         </div>
                     </div>
-                 </div>
+
+                    <!-- -------------------end of messages---------- -->
+
+
+                    <!-- ----------------------------friend request---------------- -->
+                    <div class="friend-requests">
+                        <h4>Requests</h4>
+                        <div class="request">
+                            <div class="info">
+                                <div class="profile-picture">
+                                    <img src="/parent/assets/Brand.png">
+                                </div>
+                                <div>
+                                    <h5>Felix Filip</h5>
+                                    <p class="text-muted">
+                                        8 Mutual Friends
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="btn btn-primary">
+                                    Accept
+                                </button>
+                                <button class="btn">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                        <div class="request">
+                            <div class="info">
+                                <div class="profile-picture">
+                                    <img src="/parent/assets/Brand.png">
+                                </div>
+                                <div>
+                                    <h5>Felix Filip</h5>
+                                    <p class="text-muted">
+                                        8 Mutual Friends
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="btn btn-primary">
+                                    Accept
+                                </button>
+                                <button class="btn">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ------------------right section end------ -->
             </div>
-            <!-- ------------------right section end------ -->
-        </div>        
-     </main>
+        </main>
 
-     <!-- -------------------------Theme Customization-------------- -->
-     <div class="customize-theme">
-        <div class="card">
-            <h2>Customize your interface</h2>
-            <P>Manage your font size, color, and background</P>
+        <!-- -------------------------Theme Customization-------------- -->
+        <div class="customize-theme">
+            <div class="card">
+                <h2>Customize your interface</h2>
+                <P>Manage your font size, color, and background</P>
 
-            <!-- ---------------------font sizes------- -->
-             <div class="font-size">
-                <h4>Font Size</h4>
-                <div>
-                    <h6>Aa</h6>
-                    <div class="choose-size">
-                        <span class="font-size-1"></span>
-                        <span class="font-size-2 active"></span>
-                        <span class="font-size-3"></span>
-                        <span class="font-size-4"></span>
-                        <span class="font-size-5"></span>
+                <!-- ---------------------font sizes------- -->
+                <div class="font-size">
+                    <h4>Font Size</h4>
+                    <div>
+                        <h6>Aa</h6>
+                        <div class="choose-size">
+                            <span class="font-size-1"></span>
+                            <span class="font-size-2 active"></span>
+                            <span class="font-size-3"></span>
+                            <span class="font-size-4"></span>
+                            <span class="font-size-5"></span>
+                        </div>
+                        <h3>Aa</h3>
                     </div>
-                    <h3>Aa</h3>
                 </div>
-             </div>
 
-             <!-- -----------------Primary colors------- -->
-            <div class="color">
-                <h4>Color</h4>
-                <div class="choose-color">
-                    <span class="color-1 active"></span>
-                    <span class="color-2"></span>
-                    <span class="color-3"></span>
-                    <span class="color-4"></span>
-                    <span class="color-5"></span>
+                <!-- -----------------Primary colors------- -->
+                <div class="color">
+                    <h4>Color</h4>
+                    <div class="choose-color">
+                        <span class="color-1 active"></span>
+                        <span class="color-2"></span>
+                        <span class="color-3"></span>
+                        <span class="color-4"></span>
+                        <span class="color-5"></span>
+                    </div>
+                </div>
+
+                <!-- -----------------------Background colors------- -->
+                <div class="background">
+                    <h4>Background</h4>
+                    <div class="choose-bg">
+                        <div class="bg-1 active">
+                            <span></span>
+                            <h5 for="bg-1">Light</h5>
+                        </div>
+                        <div class="bg-2">
+                            <span></span>
+                            <h5 for="bg-2">Dim</h5>
+                        </div>
+                        <div class="bg-3">
+                            <span></span>
+                            <h5 for="bg-3">Light Out</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- -----------------------Background colors------- -->
-             <div class="background">
-                <h4>Background</h4>
-                <div class="choose-bg">
-                    <div class="bg-1 active">
-                        <span></span>
-                        <h5 for="bg-1">Light</h5>
-                    </div>
-                    <div class="bg-2">
-                        <span></span>
-                        <h5 for="bg-2">Dim</h5>
-                    </div>
-                    <div class="bg-3">
-                        <span></span>
-                        <h5 for="bg-3">Light Out</h5>
-                    </div>
-                </div>
-             </div>
         </div>
-     </div>
-     </div>
+    </div>
 
 
 
 
     <script src="script.js"></script>
-</body> 
+</body>
+
 </html>

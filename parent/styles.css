@@ -69,7 +69,7 @@
 body{
     font-family: "Poppins", sans-serif;
     color: var(--darkgrey);
-    background: var(--text-color);
+    background: var(--background);
     overflow-x: hidden;
 }
 
@@ -166,7 +166,7 @@ nav .create {
 /* --------------------------main---------------- */
 main{
     position: relative;
-    top: 5.6rem;
+    top: 4.0rem;
     background: var(--background);
     /* background: lightgoldenrodyellow; */
 }
@@ -742,6 +742,87 @@ main .container .right{
     margin-right: 1rem;
 }
 
+
+/* ---------------authentication Create/Login------------------- */
+
+.auth {
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: var(--background);
+    box-shadow: var(--neon-box-shadow);
+
+}
+
+.auth form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth form button {
+    cursor: pointer;
+}
+
+.auth form span{
+    display: flex;
+    font-weight: 500;
+    color: var(--deepblue);
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth form p {
+    margin: 10px 5px;
+    color: var(--deepblue);
+    font-weight: 500;
+    font-family: cursives;
+}
+
+.auth form p a {
+    color: var(--nighttime);
+    padding: 0.1rem 0.5rem;
+    text-decoration: underline;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.auth form p input {
+    margin-right: 10px;
+}
+
+.auth form span a{
+    margin-left: 10px;
+    color: var(--hover-color);
+    background-color: var(--darkgrey);
+    box-shadow: var(--neon-box-shadow);
+    padding: 0.1rem 0.5rem;
+    border-radius: 5px;
+}
+
+.auth .create-account label{
+    font-weight: 600;
+    color: var(--secon-bg-color);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+
+
+
 /* ----------BreakPoint Section For all accessories-------- */
 
 @media screen and (max-width: 1200px){
@@ -813,45 +894,3 @@ main .container .right{
     }
 }
 
-/* ---------------login authentication------------------- */
-
-.auth {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.auth form {
-    display: flex;
-    flex-direction: column;
-}
-
-.auth form span{
-    display: flex;
-    font-weight: 500;
-    color: var(--deepblue);
-    margin-top: 15px;
-    align-items: center;
-    justify-content: center;
-}
-
-.auth form span a{
-    margin-left: 10px;
-    color: var(--hover-color);
-    background-color: var(--darkgrey);
-    box-shadow: var(--neon-box-shadow);
-    padding: 0.1rem 0.5rem;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
