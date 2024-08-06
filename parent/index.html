@@ -17,7 +17,8 @@
     <div class="auth">
         <div id="auth-container">
             <form id="create-account" autocomplete="off">
-                <div id="message-area"></div>
+                <div id="register-message-area" class="submit-message"></div>
+                <span class="text-bold">CREATE ACCOUNT</span>
                 <label for="firstname">FirstName:</label>
                 <input type="text" id="firstname" required>
                 <label for="lastname">LastName:</label>
@@ -36,11 +37,13 @@
             </form>
 
             <form id="login-form" style="display: none;">
-                <div id="message-area"></div>
+                <div id="login-message-area" class="submit-message"></div>
+                <span >LOGIN</span>
                 <label for="username-phonenumber">Username:</label>
                 <input type="text" id="username-phonenumber" required>
                 <label for="password">Password:</label>
                 <input type="password" id="login-password" required>
+                <p><input type="checkbox" id="show-passwords"> Show Password</p>
                 <button type="submit" class="btn btn-primary">Login</button>
                 <p>Forgot Password? <a href="" id="reset-link">Reset</a></p>
                 <span>you don't have an account? <a href="#" id="register-link">Create</a></span>
@@ -48,22 +51,27 @@
 
             <!-- email verification -->
             <form id="forgot-password-form" style="display: none;">
+                <div id="forgot-message-area" class="submit-message"></div>
                 <label for="forgot-email">Enter your registered email:</label>
                 <input type="email" id="forgot-email" required>
-                <button type="submit" class="btn btn-primary">Send Code</button>
+                <button type="submit" class="btn btn-primary" id="send-code-btn">Send Code</button>
+                <span>you don't have an account? <a href="#" id="forgot-link">Login</a></span>
             </form>
             
             <!-- ------------------generated code----------- -->
             <form id="code-verification" style="display: none;">
+                <div id="code-message-area" class="submit-message"></div>
                 <label for="Enter-Code">Enter verification code:</label>
                 <input type="number" id="enter-code">
             </form>
 
             <!-- form after successful verification -->
             <form id="reset-password-form" style="display: none;">
+                <div id="reset-message-area" class="submit-message"></div>
                 <label for="new-password">Enter your new password:</label>
                 <input type="password" id="new-password" required>
-                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <p><input type="checkbox" id="show-passcode"> Show Password</p>
+                <button type="submit" class="btn btn-primary" id="reset-password-btn">Reset Password</button>
             </form>
         </div>
     </div>
@@ -98,9 +106,9 @@
                             <img src="./assets/Me_Image.jpg">
                         </div>
                         <div class="handle">
-                            <h4>Temi Tayo</h4>
+                            <h4 id="user-lastname">Temi tayo</h4>
                             <p class="text-muted">
-                                @Temi
+                                @<span id="user-username"></span>
                             </p>
                         </div>
                     </a>

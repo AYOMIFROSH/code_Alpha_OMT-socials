@@ -220,7 +220,7 @@ Bg1.addEventListener('click', () => {
     changeBg(background);
 
     // Apply the background changes
-    window.location.reload();
+    // window.location.reload();
 });
 
 
@@ -249,14 +249,78 @@ const loginForm = document.getElementById('login-form');
 const page = document.getElementById('content');
 const loginLink = document.getElementById('login-link');
 const registerLink = document.getElementById('register-link');
+const forgotLink = document.getElementById('forgot-link');
 const passwordInput = document.getElementById('password');
+const passwordInputs = document.getElementById('login-password');
+const passcodeInput = document.getElementById('new-password');
 const showPasswordCheckbox = document.getElementById('show-password');
+const showPasswordCheckboxs = document.getElementById('show-passwords');
+const showPasscodeCheckbox = document.getElementById('show-passcode');
 const resetPassword = document.getElementById('reset-link');
+const sendCodeBtn = document.getElementById('send-code-btn');
+const resetPasswordBtn = document.getElementById('reset-password-btn');
+const getusername = document.getElementById('user-username');
 const forgotPasswordForm = document.getElementById('forgot-password-form');
+const codeVerificationForm = document.getElementById('code-verification');
+const resetPasswordForm = document.getElementById('reset-password-form');
+
+function showForm(formId) {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'none';
+    forgotPasswordForm.style.display = 'none';
+    codeVerificationForm.style.display = 'none';
+    resetPasswordForm.style.display = 'none';
+    page.style.display = 'none';
+
+    if (formId) {
+        document.getElementById(formId).style.display = 'block';
+    }
+}
+
+// Check the saved state when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const savedState = localStorage.getItem('currentForm');
+    if (savedState) {
+        showForm(savedState);
+    } else {
+        showForm('create-account');
+    }
+});
+
+// Save the current state to localStorage
+function saveState(formId) {
+    localStorage.setItem('currentForm', formId);
+}
+
+// Event listeners to save the state when navigating between forms
+loginLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    saveState('login-form');
+    showForm('login-form');
+});
+
+registerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    saveState('create-account');
+    showForm('create-account');
+});
+
+resetPassword.addEventListener('click', (e) => {
+    e.preventDefault();
+    saveState('forgot-password-form');
+    showForm('forgot-password-form');
+});
+
+// const forgotLink = document.getElementById('forgot-link');
+
+forgotLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    saveState('login-form');
+    showForm('login-form');
+});
 
 
-
-
+// Create account form script
 registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const firstName = document.getElementById('firstname').value;
@@ -266,7 +330,6 @@ registerForm.addEventListener('submit', async (e) => {
     const phoneNumber = document.getElementById('phoneNumber').value;
     const password = document.getElementById('password').value;
 
-
     try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const response = await fetch('http://localhost:3000/register', {
@@ -274,40 +337,23 @@ registerForm.addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken
-
             },
             body: JSON.stringify({ firstName, lastName, userName, email, phoneNumber, password })
         });
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('message-area').textContent = 'User registered successfully';
-
-            registerForm.style.display = 'none';
-
-            loginForm.style.display = 'block'; // Or 'flex', 'inline', etc., depending on your CSS
-
+            document.getElementById('register-message-area').textContent = 'User registered successfully';
+            saveState('login-form');
+            showForm('login-form');
         } else {
-            document.getElementById('message-area').textContent = 'Error: ' + data.message;
+            document.getElementById('register-message-area').textContent = 'Error: ' + data.message;
         }
     } catch (error) {
         alert('Network Error: ' + error.message);
     }
 });
 
-
-const token = localStorage.getItem('token');
-if (token) {
-  fetch('http://localhost:3000/profile', {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => alert('Network Error: ' + error.message));
-}
-
-
+// Login account credentials script
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const userName = document.getElementById('username-phonenumber').value;
@@ -317,15 +363,15 @@ loginForm.addEventListener('submit', async (e) => {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
-            headers: ('/protected-route', {
+            headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken
-            }),
+            },
             body: JSON.stringify({ userName, password })
         });
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('message-area').textContent = 'Error: ' + data.message;
+            document.getElementById('login-message-area').textContent = 'Login successful';
             const token = data.token;
             localStorage.setItem('token', token);
             const profileResponse = await fetch('http://localhost:3000/profile', {
@@ -334,87 +380,132 @@ loginForm.addEventListener('submit', async (e) => {
                 }
             });
             const profileData = await profileResponse.json();
-            console.log(profileData); // Display or use the profile data as needed        
+            console.log(profileData); // Display or use the profile data as needed
+            saveState('content');
+            showForm('content');
 
-            loginForm.style.display = 'none';
-
-            page.style.display = 'block';
-
+            getusername.textContent = userName;
         } else {
-            alert('Error: ' + data.message);
+            document.getElementById('login-message-area').textContent = 'Error: ' + data.message;
+            clearLoginForm();
+        }
+    } catch (error) {
+        alert('Network Error: ' + error.message);
+        clearLoginForm();
+    }
+});
+
+function clearLoginForm() {
+    document.getElementById('username-phonenumber').value = '';
+    document.getElementById('login-password').value = '';
+}
+
+// View password input
+showPasswordCheckbox.addEventListener('change', () => {
+    passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
+});
+showPasswordCheckboxs.addEventListener('change', () => {
+    passwordInputs.type = showPasswordCheckboxs.checked ? 'text' : 'password';
+});
+showPasscodeCheckbox.addEventListener('change', () => {
+    passcodeInput.type = showPasscodeCheckbox.checked ? 'text' : 'password';
+});
+
+// Forget password script
+forgotPasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('forgot-email').value;
+    sendCodeBtn.textContent = 'Sending...';
+
+    try {
+        const response = await fetch('http://localhost:3000/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            document.getElementById('forgot-message-area').textContent = 'Verification code sent to your email.';
+            saveState('code-verification');
+            showForm('code-verification');
+            sendCodeBtn.textContent = 'Send Code';
+        } else {
+            document.getElementById('forgot-message-area').textContent = 'Error: ' + data.message;
+            sendCodeBtn.textContent = 'Send Code';
+        }
+    } catch (error) {
+        alert('Error sending verification code: ' + error.message);
+        sendCodeBtn.textContent = 'Send Code';
+    }
+});
+
+// Code verification script
+document.getElementById('code-verification').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('forgot-email').value;
+    const verificationCode = document.getElementById('enter-code').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/verify-code', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, verificationCode })
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+            document.getElementById('code-message-area').textContent = 'Verification successful!';
+            saveState('reset-password-form');
+            showForm('reset-password-form');
+        } else {
+            document.getElementById('code-message-area').textContent = 'Error: ' + data.message;
         }
     } catch (error) {
         alert('Network Error: ' + error.message);
     }
 });
 
-
-// page.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     window.location.reload('false');
-// })
-
-// login link
-
-// const token = localStorage.getItem('token');
-// fetch('/protected-route', {
-//   headers: {
-//     'Authorization': `Bearer ${token}`,
-//     'x-access-token': token
-//   }
-// });
-
-
-loginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerForm.style.display = 'none';
-    loginForm.style.display = 'block';
-});
-
-registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-});
-
-resetPassword.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginForm.style.display = 'none';
-    forgotPasswordForm.style.display = 'block';
-});
-
-// View password input 
-showPasswordCheckbox.addEventListener('change', () => {
-    passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
-});
-
-// forget password form 
-forgotPasswordForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    let email = document.getElementById('forgot-email').value;
-
-    try {
-
-        // Display a message to the user indicating that the code has been sent
-        document.getElementById('message-area').textContent = 'Verification code sent to your email.';
-
-        email = document.getElementById('code-verification').style.display = 'block';
-
-    } catch (error) {
-        alert('Error sending verification code: ' + error.message);
-    }
-});
-
-// Handle password reset after successful verification
+// Reset password script
 document.getElementById('reset-password-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const email = document.getElementById('forgot-email').value;
+    const verificationCode = document.getElementById('enter-code').value;
     const newPassword = document.getElementById('new-password').value;
+    resetPasswordBtn.textContent = 'Resetting...';
 
     try {
+        const response = await fetch('http://localhost:3000/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, verificationCode, newPassword })
+        });
 
-        // Inform the user that their password has been reset
-        document.getElementById('message-area').textContent = 'Password reset successful!';
-    } catch (error) {
+        const data = await response.json();
+        if (response.ok) {
+            document.getElementById('reset-message-area').textContent = 'Password reset successful!';
+            saveState('login-form');
+            showForm('login-form');
+            resetPasswordBtn.textContent = 'Reset Password';
+        } else {
+            document.getElementById('reset-message-area').textContent = 'Error: ' + data.message;
+            resetPasswordBtn.textContent = 'Reset Password';
+        
+        }
+        } catch (error) {
         alert('Error resetting password: ' + error.message);
-    }
-});
+        resetPasswordBtn.textContent = 'Reset Password';
+        
+        }
+        });
+        
+        
+
+
+
+

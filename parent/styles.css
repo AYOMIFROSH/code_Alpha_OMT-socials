@@ -275,6 +275,11 @@ main .container .left .profile{
     padding: 1rem 0;
 }
 
+.left .profile .handle .p span{
+    font-size: 0.5rem;
+    color: var(--deepblue);
+}
+
 /* -----------------notification section---------- */
 .left .notifications-popup{
     position: absolute;
@@ -338,6 +343,8 @@ main .container .left .profile{
     position: relative;
     overflow: hidden;
 }
+
+
 
 .middle .stories .story::before{
     content: "";
@@ -819,6 +826,15 @@ input[type="number"] {
     background: var(--text-color);
     color: var(--bg-color);
 }
+
+.auth form .submit-message {
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+  }
+  
+ .auth form .submit-message.fade-out {
+    opacity: 0;
+  }
 
 
 

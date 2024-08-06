@@ -5,6 +5,8 @@ const cors = require('cors'); // Import cors
 const User = require('./models/user');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require('nodemailer')
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -81,22 +83,47 @@ app.post('/register', async (req, res) => {
 // Login route
 app.post('/login', async (req, res) => {
     try {
-      // ...
-      const { userName, password } = req.body;
-      const user = await User.findOne({ userName });
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-      const token = jwt.sign({ userId: user._id }, '705843Temi5101Tayo', { expiresIn: '1h' });
-      res.status(200).json({ message: 'Login successful', token });
+        const { userName, password } = req.body;
+        const user = await User.findOne({ userName });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        const token = jwt.sign({ userId: user._id }, '705843Temi5101Tayo', { expiresIn: '1h' });
+        res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
-      res.status(500).json({ message: 'Server error: ' + error.message });
+        res.status(500).json({ message: 'Server error: ' + error.message });
     }
-  });
+});
+
+
+app.post('/reset-password', async (req, res) => {
+    try {
+        const { email, newPassword } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+        user.verificationCode = undefined;
+        user.verificationCodeExpires = undefined;
+        await user.save();
+
+        res.status(200).json({ message: 'Password reset successful!' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error resetting password: ' + error.message });
+    }
+});
+
+
+
   
 
 function generateSixDigitCode() {
@@ -104,46 +131,68 @@ function generateSixDigitCode() {
     return Math.floor(Math.random() * 900000) + 100000;
 }
 
+
+// Configure nodemailer
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'taskzenreset@gmail.com',
+        pass: 'rhjlcwveeeaktiry'
+    }
+});
+
+// ----forget password routes 
+
 app.post('/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
-        const verificationCode = generateSixDigitCode(); // Generate the code
-
         const user = await User.findOne({ email });
-        if (!email) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-        const isMatch = await bcrypt.compare(email, user.email);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
         }
 
+        const verificationCode = generateSixDigitCode();
+        user.verificationCode = verificationCode;
+        await user.save();
+        user.verificationCodeExpires = Date.now() + 3600000; // 1 hour from now
+      await user.save();
 
-        // Store the code in your database alongside the user's email
-        // Send an email with the code (use nodemailer)
+        const mailOptions = {
+            from: 'taskzenreset@gmail.com',
+            to: email,
+            subject: 'Password Reset Verification Code',
+            text: `Your verification code is ${verificationCode}`
+        };
 
-        res.status(200).json({ message: 'Verification code sent to your email.' });
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(500).json({ message: 'Error sending email: ' + error.message });
+            }
+            res.status(200).json({ message: 'Verification code sent to your email.' });
+        });
     } catch (error) {
         res.status(500).json({ message: 'Error sending verification code: ' + error.message });
     }
 });
 
-// Add this route for handling password reset
-app.post('/reset-password', async (req, res) => {
-    try {
-        const { email, verificationCode, newPassword } = req.body;
+// -------------reset password routes
 
-        // Verify the code against the stored value in your database
-        // If valid, hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // Update the user's password in your database (implement this part)
+app.post('/verify-code', async (req, res) => {
+  try {
+      const { email, verificationCode } = req.body;
+      const user = await User.findOne({ email, verificationCode, verificationCodeExpires: { $gt: Date.now() } });
 
-        res.status(200).json({ message: 'Password reset successful!' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error resetting password: ' + error.message });
-    }
+      if (!user) {
+          return res.status(400).json({ message: 'Invalid or expired verification code' });
+      }
+
+      res.status(200).json({ message: 'Verification successful' });
+  } catch (error) {
+      res.status(500).json({ message: 'Error verifying code: ' + error.message });
+  }
 });
+
 
 
 app.listen(3000, () => {
