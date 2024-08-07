@@ -240,6 +240,78 @@ Bg3.addEventListener('click', () => {
 
 });
 
+// interactive profile pictur and logout dropdown
+
+document.addEventListener('DOMContentLoaded', () => {
+    const profileImg = document.getElementById('profile-img');
+    const uploadInput = document.getElementById('upload-input');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const uploadLink = document.getElementById('upload-link');
+    const logoutLink = document.getElementById('logout-link');
+    const loginForm = document.getElementById('login-form');
+    const leftProfileImg = document.querySelector('.left .profile-picture img');
+
+    // Load saved profile picture from localStorage
+    const savedProfilePic = localStorage.getItem('profilePic');
+    if (savedProfilePic) {
+        profileImg.src = savedProfilePic;
+        leftProfileImg.src = savedProfilePic;
+    }
+
+
+
+
+    profileImg.addEventListener('click', () => {
+        dropdownMenu.style.display = 'block';
+    });
+
+    uploadLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        uploadInput.click();
+    });
+
+    uploadInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const newProfilePic = event.target.result;
+                // profileImg.src = event.target.result;
+                leftProfileImg.src = newProfilePic;
+                profileImg.src = newProfilePic;
+                // Save the new profile picture to localStorage
+                localStorage.setItem('profilePic', newProfilePic);
+
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Clear specific items from local storage
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentForm');
+        // Optionally, clear other user-related data
+        // localStorage.removeItem('user');
+
+        // Update the UI
+        loginForm.style.display = 'block';
+        document.getElementById('content').style.display = 'none';
+        alert('Logged out');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!dropdownMenu.contains(e.target) && e.target !== profileImg) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+
 
 
 
@@ -264,6 +336,8 @@ const forgotPasswordForm = document.getElementById('forgot-password-form');
 const codeVerificationForm = document.getElementById('code-verification');
 const resetPasswordForm = document.getElementById('reset-password-form');
 
+
+
 function showForm(formId) {
     registerForm.style.display = 'none';
     loginForm.style.display = 'none';
@@ -271,6 +345,7 @@ function showForm(formId) {
     codeVerificationForm.style.display = 'none';
     resetPasswordForm.style.display = 'none';
     page.style.display = 'none';
+    // getusername.style.display = 'none';
 
     if (formId) {
         document.getElementById(formId).style.display = 'block';
@@ -358,6 +433,8 @@ loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const userName = document.getElementById('username-phonenumber').value;
     const password = document.getElementById('login-password').value;
+    const userLastName = document.getElementById('user-lastname');
+    const userUsername = document.getElementById('user-username');
 
     try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -380,11 +457,14 @@ loginForm.addEventListener('submit', async (e) => {
                 }
             });
             const profileData = await profileResponse.json();
-            console.log(profileData); // Display or use the profile data as needed
+
+            userLastName.textContent = profileData.lastName;
+            userUsername.textContent = profileData.userName;
+
             saveState('content');
             showForm('content');
 
-            getusername.textContent = userName;
+
         } else {
             document.getElementById('login-message-area').textContent = 'Error: ' + data.message;
             clearLoginForm();
@@ -495,17 +575,13 @@ document.getElementById('reset-password-form').addEventListener('submit', async 
         } else {
             document.getElementById('reset-message-area').textContent = 'Error: ' + data.message;
             resetPasswordBtn.textContent = 'Reset Password';
-        
+
         }
-        } catch (error) {
+    } catch (error) {
         alert('Error resetting password: ' + error.message);
         resetPasswordBtn.textContent = 'Reset Password';
-        
-        }
-        });
-        
-        
 
-
+    }
+});
 
 

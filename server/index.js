@@ -36,7 +36,7 @@ async function connectDB() {
 
 connectDB();
 
-app.use(express.urlencoded({ extended: true })); // Add this line to parse form data
+app.use(express.urlencoded({ extended: true })); 
 
 
 const verifyToken = (req, res, next) => {

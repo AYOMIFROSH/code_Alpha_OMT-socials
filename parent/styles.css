@@ -163,6 +163,34 @@ nav .create {
     gap: 2rem;
 }
 
+/* ------------------------popup upload picture------------------------ */
+
+/* Add this to your existing CSS */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    background: var(--secon-bg-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    z-index: 20;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background: var(--secon-bg-color);
+    color: var(--hover-color);
+}
+
+
 /* --------------------------main---------------- */
 main{
     position: relative;

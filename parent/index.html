@@ -38,7 +38,7 @@
 
             <form id="login-form" style="display: none;">
                 <div id="login-message-area" class="submit-message"></div>
-                <span >LOGIN</span>
+                <span>LOGIN</span>
                 <label for="username-phonenumber">Username:</label>
                 <input type="text" id="username-phonenumber" required>
                 <label for="password">Password:</label>
@@ -57,7 +57,7 @@
                 <button type="submit" class="btn btn-primary" id="send-code-btn">Send Code</button>
                 <span>you don't have an account? <a href="#" id="forgot-link">Login</a></span>
             </form>
-            
+
             <!-- ------------------generated code----------- -->
             <form id="code-verification" style="display: none;">
                 <div id="code-message-area" class="submit-message"></div>
@@ -89,7 +89,12 @@
                 <div class="create">
                     <label class="btn btn-primary" for="create-post">Create</label>
                     <div class="profile-picture">
-                        <img src="./assets/Me_Image.jpg" alt="">
+                        <img src="./assets/Me_Image.jpg" alt="" id="profile-img">
+                        <input type="file" id="upload-input" style="display: none;">
+                        <div id="dropdown-menu" class="dropdown-menu">
+                            <a href="#" id="upload-link">Upload Picture</a>
+                            <a href="#" id="logout-link">Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>
