@@ -37,35 +37,6 @@ async function connectDB() {
 connectDB();
 
 app.use(express.urlencoded({ extended: true })); 
-
-
-const verifyToken = (req, res, next) => {
-    const token = req.headers['x-access-token'];
-    if (!token) {
-      return res.status(403).json({ message: 'No token provided' });
-    }
-    jwt.verify(token, '705843Temi5101Tayo', (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ message: 'Invalid token' });
-      }
-      req.userId = decoded.userId;
-      next();
-    });
-  };
-
-  app.get('/profile', verifyToken, async (req, res) => {
-    try {
-      const user = await User.findById(req.userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      const { firstName, lastName, userName, email, phoneNumber } = user;
-      res.status(200).json({ firstName, lastName, userName, email, phoneNumber });
-    } catch (error) {
-      res.status(500).json({ message: 'Server error: ' + error.message });
-    }
-  });
-  
   
   
 // Register route
@@ -80,7 +51,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Login route
+
 app.post('/login', async (req, res) => {
     try {
         const { userName, password } = req.body;
@@ -93,11 +64,13 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
         const token = jwt.sign({ userId: user._id }, '705843Temi5101Tayo', { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token });
+        const { firstName, lastName, userName: userUsername } = user;
+        res.status(200).json({ message: 'Login successful', token, firstName, lastName, userUsername });
     } catch (error) {
         res.status(500).json({ message: 'Server error: ' + error.message });
     }
 });
+
 
 
 app.post('/reset-password', async (req, res) => {

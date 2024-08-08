@@ -250,12 +250,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutLink = document.getElementById('logout-link');
     const loginForm = document.getElementById('login-form');
     const leftProfileImg = document.querySelector('.left .profile-picture img');
+    const img = document.getElementById('img');
+    const proPic = document.getElementById('proPic');
+    const userLastName = document.getElementById('user-lastname');
+    const userUsername = document.getElementById('user-username')
 
     // Load saved profile picture from localStorage
     const savedProfilePic = localStorage.getItem('profilePic');
+    const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+
     if (savedProfilePic) {
         profileImg.src = savedProfilePic;
         leftProfileImg.src = savedProfilePic;
+        img.src = savedProfilePic;
+        proPic.src = savedProfilePic;
+    }
+
+    if (savedUserInfo) {
+        userLastName.textContent = savedUserInfo.lastName;
+        userUsername.textContent = savedUserInfo.userName;
     }
 
 
@@ -279,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // profileImg.src = event.target.result;
                 leftProfileImg.src = newProfilePic;
                 profileImg.src = newProfilePic;
+                img.src = newProfilePic;
+                proPic.src = newProfilePic;
                 // Save the new profile picture to localStorage
                 localStorage.setItem('profilePic', newProfilePic);
 
@@ -289,17 +305,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutLink.addEventListener('click', (e) => {
         e.preventDefault();
-        // Clear specific items from local storage
         localStorage.removeItem('token');
-        localStorage.removeItem('currentForm');
-        // Optionally, clear other user-related data
-        // localStorage.removeItem('user');
-
-        // Update the UI
+        localStorage.removeItem('userInfo');
+        localStorage.removeItem('profilePic');
         loginForm.style.display = 'block';
         document.getElementById('content').style.display = 'none';
         alert('Logged out');
     });
+
 
     document.addEventListener('click', (e) => {
         if (!dropdownMenu.contains(e.target) && e.target !== profileImg) {
@@ -451,20 +464,20 @@ loginForm.addEventListener('submit', async (e) => {
             document.getElementById('login-message-area').textContent = 'Login successful';
             const token = data.token;
             localStorage.setItem('token', token);
-            const profileResponse = await fetch('http://localhost:3000/profile', {
-                headers: {
-                    'Authorization': `Bearer ${data.token}`
-                }
-            });
-            const profileData = await profileResponse.json();
 
-            userLastName.textContent = profileData.lastName;
-            userUsername.textContent = profileData.userName;
+            // Save user info to localStorage
+            const userInfo = {
+                lastName: data.lastName,
+                userName: data.userUsername
+            };
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+            // Update the UI with user details
+            userLastName.textContent = data.lastName;
+            userUsername.textContent = data.userUsername;
 
             saveState('content');
             showForm('content');
-
-
         } else {
             document.getElementById('login-message-area').textContent = 'Error: ' + data.message;
             clearLoginForm();
