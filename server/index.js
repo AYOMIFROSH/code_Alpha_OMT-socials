@@ -37,7 +37,43 @@ async function connectDB() {
 connectDB();
 
 app.use(express.urlencoded({ extended: true })); 
-  
+
+// Middleware to authenticate user
+function authenticateToken(req, res, next) {
+    const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, '705843Temi5101Tayo', (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
+
+// Route to get user data
+app.get('/user-data', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json({ profilePic: user.profilePic, userInfo: user.userInfo });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error: ' + error.message });
+    }
+});
+
+// Route to update profile picture
+app.post('/update-profile-pic', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        user.profilePic = req.body.profilePic;
+        await user.save();
+        res.status(200).json({ message: 'Profile picture updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error: ' + error.message });
+    }
+});
+
   
 // Register route
 app.post('/register', async (req, res) => {

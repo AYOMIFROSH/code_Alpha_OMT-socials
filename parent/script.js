@@ -253,7 +253,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = document.getElementById('img');
     const proPic = document.getElementById('proPic');
     const userLastName = document.getElementById('user-lastname');
-    const userUsername = document.getElementById('user-username')
+    const userUsername = document.getElementById('user-username');
+
+    // Load saved profile picture and user info from the server
+    async function loadUserData() {
+        try {
+            const response = await fetch('http://localhost:3000/user-data', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                profileImg.src = data.profilePic;
+                leftProfileImg.src = data.profilePic;
+                img.src = data.profilePic;
+                proPic.src = data.profilePic;
+                userLastName.textContent = data.userInfo.lastName;
+                userUsername.textContent = data.userInfo.userName;
+            } else {
+                console.error('Error loading user data:', data.message);
+            }
+        } catch (error) {
+            console.error('Network error:', error.message);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadUserData);
+
+
+
+    uploadInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const newProfilePic = event.target.result;
+                profileImg.src = newProfilePic;
+                leftProfileImg.src = newProfilePic;
+                img.src = newProfilePic;
+                proPic.src = newProfilePic;
+
+                // Save the new profile picture to the server
+                try {
+                    const response = await fetch('http://localhost:3000/update-profile-pic', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify({ profilePic: newProfilePic })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        console.error('Error updating profile picture:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Network error:', error.message);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
 
     // Load saved profile picture from localStorage
     const savedProfilePic = localStorage.getItem('profilePic');
@@ -320,10 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-
-
-
 
 
 
@@ -462,6 +520,8 @@ loginForm.addEventListener('submit', async (e) => {
         const data = await response.json();
         if (response.ok) {
             document.getElementById('login-message-area').textContent = 'Login successful';
+            clearLoginForm();
+
             const token = data.token;
             localStorage.setItem('token', token);
 

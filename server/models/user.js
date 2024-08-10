@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     phoneNumber: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    verificationCode: { type: String }, // Add this field
-    verificationCodeExpires: { type: Date }
+    verificationCode: { type: String }, 
+    verificationCodeExpires: { type: Date },
+    profilePic: { type: String }, 
+    userInfo: { type: Object } 
 });
 
 // Hash the password before saving the user
